@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tỏ Tình</title>
+  <style>
+    body {
+      background-color: black;
+      overflow: hidden;
+      margin: 0;
+    }
+
+    #heart {
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%) scale(0);
+      color: red;
+      font-size: 100px;
+      animation: heartBeat 1s infinite;
+      transition: transform 1s ease-in-out;
+    }
+
+    @keyframes heartBeat {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.2);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    #snowflakeContainer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+    }
+
+    .snowflake {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: white;
+      border-radius: 50%;
+      pointer-events: none;
+      animation: snowfall linear infinite;
+    }
+
+    @keyframes snowfall {
+      0% {
+        transform: translateY(-100%);
+      }
+      100% {
+        transform: translateY(100vh);
+      }
+    }
+
+    .text-effect {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 40px;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    #leftText {
+      position: absolute;
+      top: 50%;
+      left: 10%;
+      transform: translateY(-50%);
+      color: white;
+      font-size: 24px;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    #rightText {
+      position: absolute;
+      top: 50%;
+      right: 10%;
+      transform: translateY(-50%);
+      color: white;
+      font-size: 24px;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    #background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+      background-image: url('background.gif');
+      background-size: cover;
+      animation: backgroundAnimation 30s linear infinite;
+    }
+
+    @keyframes backgroundAnimation {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    #audio {
+      display: none;
+    }
+
+    #startButton {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: red;
+      color: white;
+      padding: 10px 20px;
+      font-size: 24px;
+      border-radius: 5px;
+      cursor: pointer;
+      opacity: 1;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    #startButton:hover {
+      opacity: 0.8;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .button-container {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .button {
+      display: inline-block;
+      margin: 0 10px;
+      background-color: red;
+      color: white;
+      padding: 10px 20px;
+      font-size: 24px;
+      border-radius: 5px;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    .button:hover {
+      opacity: 0.8;
+    }
+
+    /* Responsive CSS */
+    @media screen and (max-width: 600px) {
+      #heart {
+        font-size: 60px;
+      }
+
+      .text-effect {
+        font-size: 30px;
+      }
+
+      #leftText,
+      #rightText {
+        font-size: 18px;
+      }
+
+      .button {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <audio id="audio" src="love.mp3" autoplay loop></audio>
+  <div id="heart" class="hidden">&hearts;</div>
+  <div id="snowflakeContainer" class="hidden"></div>
+  <div class="text-effect hidden">Tôi yêu</div>
+  <div id="leftText" class="hidden">Em</div>
+  <div id="rightText" class="hidden">Anh</div>
+  <div id="background" class="hidden"></div>
+  <button id="startButton">Bắt đầu</button>
+  <div class="button-container hidden">
+    <a href="https://example.com" class="button">Nút 1</a>
+    <a href="https://example.com" class="button">Nút 2</a>
+  </div>
+
+  <script>
+    // Tạo các yếu tố tuyết rơi
+    function createSnowflake() {
+      const snowflake = document.createElement("div");
+      snowflake.classList.add("snowflake");
+      snowflake.style.left = Math.random() * window.innerWidth + "px";
+      snowflake.style.animationDuration = Math.random() * 3 + 2 + "s";
+      snowflake.style.opacity = Math.random();
+      snowflake.style.fontSize = Math.random() * 10 + 10 + "px";
+      document.getElementById("snowflakeContainer").appendChild(snowflake);
+
+      setTimeout(() => {
+        snowflake.remove();
+      }, 5000);
+    }
+
+    // Tạo trái tim xoay vòng
+    function rotateHeart() {
+      const heart = document.getElementById("heart");
+      heart.style.transform = "rotate(" + Date.now() / 100 + "deg)";
+      requestAnimationFrame(rotateHeart);
+    }
+
+    // Hiệu ứng xuất hiện mềm mại cho trái tim
+    function showHeart() {
+      const heart = document.getElementById("heart");
+      heart.style.transform = "translateX(-50%) scale(1)";
+    }
+
+    // Hiệu ứng đánh chữ
+    function textEffect() {
+      const text = document.querySelector(".text-effect");
+      text.style.opacity = 1;
+
+      const textContent = text.innerHTML;
+      text.innerHTML = "";
+
+      let index = 0;
+      function typeText() {
+        if (index < textContent.length) {
+          text.innerHTML += textContent.charAt(index);
+          index++;
+          setTimeout(typeText, 50); // Thời gian mỗi ký tự xuất hiện (ms)
+        } else {
+          showButtons(); // Hiển thị nút liên kết khi đánh chữ hoàn thành
+        }
+      }
+
+      typeText();
+    }
+
+    // Hiệu ứng hiện chữ bên trái và bên phải trái tim
+    function showText() {
+      const leftText = document.getElementById("leftText");
+      const rightText = document.getElementById("rightText");
+      leftText.style.opacity = 1;
+      rightText.style.opacity = 1;
+    }
+
+    // Hiệu ứng hiện nút liên kết
+    function showButtons() {
+      const buttonContainer = document.querySelector(".button-container");
+      const buttons = buttonContainer.querySelectorAll(".button");
+      buttonContainer.classList.remove("hidden");
+      buttons.forEach((button, index) => {
+        setTimeout(() => {
+          button.style.opacity = 1;
+        }, 300 * index);
+      });
+    }
+
+    // Bắt đầu tạo tuyết rơi và hiệu ứng
+    function start() {
+      setInterval(createSnowflake, 50); // Tăng tốc độ tuyết rơi
+      rotateHeart();
+      setTimeout(textEffect, 1500);
+      setTimeout(showText, 2000);
+    }
+
+    // Bắt đầu khi người dùng nhấp vào nút
+    function startOnButtonClick() {
+      document.getElementById("startButton").classList.add("hidden");
+      document.getElementById("heart").classList.remove("hidden");
+      document.getElementById("snowflakeContainer").classList.remove("hidden");
+      document.querySelector(".text-effect").classList.remove("hidden");
+      document.getElementById("leftText").classList.remove("hidden");
+      document.getElementById("rightText").classList.remove("hidden");
+      document.getElementById("background").classList.remove("hidden");
+
+      setTimeout(showHeart, 500);
+      setTimeout(start, 1500);
+    }
+
+    document.getElementById("startButton").addEventListener("click", startOnButtonClick);
+  </script>
+</body>
+</html>
