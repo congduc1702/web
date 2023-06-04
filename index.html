@@ -284,22 +284,30 @@
     }
 
     // Bắt đầu khi người dùng nhấp vào nút
-    function startOnButtonClick() {
-      document.getElementById("startButton").classList.add("hidden");
-      document.getElementById("heart").classList.remove("hidden");
-      document.getElementById("snowflakeContainer").classList.remove("hidden");
-      document.querySelector(".text-effect").classList.remove("hidden");
-      document.getElementById("leftText").classList.remove("hidden");
-      document.getElementById("rightText").classList.remove("hidden");
-      document.getElementById("background").classList.remove("hidden");
+  function startOnButtonClick() {
+  document.getElementById("startButton").classList.add("hidden");
+  document.getElementById("heart").classList.remove("hidden");
+  document.getElementById("snowflakeContainer").classList.remove("hidden");
+  document.querySelector(".text-effect").classList.remove("hidden");
+  document.getElementById("leftText").classList.remove("hidden");
+  document.getElementById("rightText").classList.remove("hidden");
+  document.getElementById("background").classList.remove("hidden");
 
-      setTimeout(showHeart, 500);
-      setTimeout(start, 1500);
+  setTimeout(showHeart, 500);
+  setTimeout(start, 1500);
 
-      // Phát nhạc
-      const audio = document.getElementById("audio");
-      audio.play();
-    }
+  // Phát nhạc khi người dùng tương tác
+  document.addEventListener("click", playMusic);
+}
+
+// Phát nhạc
+function playMusic() {
+  const audio = document.getElementById("audio");
+  audio.play();
+
+  // Chỉ phát nhạc một lần và loại bỏ sự kiện
+  document.removeEventListener("click", playMusic);
+}
 
     document.getElementById("startButton").addEventListener("click", startOnButtonClick);
   </script>
