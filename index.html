@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>Tỏ Tình</title>
   <style>
@@ -24,9 +25,11 @@
       0% {
         transform: scale(1);
       }
+
       50% {
         transform: scale(1.2);
       }
+
       100% {
         transform: scale(1);
       }
@@ -55,6 +58,7 @@
       0% {
         transform: translateY(-100%);
       }
+
       100% {
         transform: translateY(100vh);
       }
@@ -111,16 +115,18 @@
       0% {
         transform: scale(1);
       }
+
       50% {
         transform: scale(1.05);
       }
+
       100% {
         transform: scale(1);
       }
     }
 
     #audio {
-/*       display: none; */
+      /* display: none; */
     }
 
     #startButton {
@@ -190,6 +196,7 @@
     }
   </style>
 </head>
+
 <body>
   <audio id="audio" src="love.mp3" autoplay loop></audio>
   <div id="heart" class="hidden">&hearts;</div>
@@ -304,9 +311,16 @@
         // Xóa sự kiện người dùng tương tác để không phát nhạc lặp lại
         document.body.removeEventListener("click", playAudio);
       });
+      var playButton = document.getElementById('startButton');
+      var audioPlayer = document.getElementById('audio');
+
+      playButton.addEventListener('click', function () {
+        audioPlayer.play();
+      });
     }
 
     document.getElementById("startButton").addEventListener("click", startOnButtonClick);
   </script>
 </body>
+
 </html>
